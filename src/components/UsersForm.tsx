@@ -1,8 +1,9 @@
 'use client'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useQueryClient } from '@tanstack/react-query'
 import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { UserFormFields } from './UsersFormFields'
+import { User, UserFormFields } from './UsersFormFields'
 
 const schema = z.object({
   name: z.string(),
@@ -22,10 +23,20 @@ export function UsersForm() {
     resolver: zodResolver(schema),
   })
 
+  const queryClient = useQueryClient()
+
   const { handleSubmit } = usersFormMethods
 
+  const usersQueryData = queryClient.getQueryData<User[]>(['users'])
+
   const onSubmit = (data: FormData) => {
-    console.log(data)
+    const foundUser = usersQueryData?.find((user) => user.name === data.name)
+    const userId = foundUser?.id
+    console.log({
+      pessoa: userId,
+      telefone: data.phone,
+      email: data.email,
+    })
   }
 
   return (
