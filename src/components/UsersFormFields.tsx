@@ -83,8 +83,6 @@ export function UserFormFields() {
         )}
       />
 
-      {/* <TextField label="Name" color="success" {...register('name')} /> */}
-
       <TextField label="Phone" color="success" {...register('phone')} />
 
       <TextField label="Email" color="success" {...register('email')} />
