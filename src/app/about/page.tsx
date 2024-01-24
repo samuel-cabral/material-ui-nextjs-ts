@@ -1,11 +1,10 @@
-import * as React from 'react';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import NextLink from 'next/link';
-import ProTip from '@/components/ProTip';
-import Copyright from '@/components/Copyright';
+import Copyright from '@/components/Copyright'
+import ProTip from '@/components/ProTip'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Container from '@mui/material/Container'
+import Typography from '@mui/material/Typography'
+import NextLink from 'next/link'
 
 export default function About() {
   return (
@@ -31,5 +30,5 @@ export default function About() {
         <Copyright />
       </Box>
     </Container>
-  );
+  )
 }
