@@ -38,7 +38,6 @@ export function UserFormFields() {
     data: users,
     isLoading,
     isFetching,
-    refetch,
   } = useQuery({
     queryKey: ['users'],
     queryFn: fetchUsers,
