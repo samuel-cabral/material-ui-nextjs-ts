@@ -1,9 +1,10 @@
 'use client'
+import { User } from '@/app/api/users/route'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useQueryClient } from '@tanstack/react-query'
 import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { User, UserFormFields } from './UsersFormFields'
+import { UserFormFields } from './UsersFormFields'
 
 const schema = z.object({
   name: z.string(),
@@ -11,10 +12,10 @@ const schema = z.object({
   email: z.string().email(),
 })
 
-type FormData = z.infer<typeof schema>
+export type UsersFormData = z.infer<typeof schema>
 
 export function UsersForm() {
-  const usersFormMethods = useForm<FormData>({
+  const usersFormMethods = useForm<UsersFormData>({
     defaultValues: {
       name: '',
       phone: '',
@@ -27,16 +28,26 @@ export function UsersForm() {
 
   const { handleSubmit } = usersFormMethods
 
-  const usersQueryData = queryClient.getQueryData<User[]>(['users'])
+  const onSubmit = (data: UsersFormData) => {
+    const name = data.name
 
-  const onSubmit = (data: FormData) => {
-    const foundUser = usersQueryData?.find((user) => user.name === data.name)
-    const userId = foundUser?.id
-    console.log({
-      pessoa: userId,
-      telefone: data.phone,
-      email: data.email,
-    })
+    const usersQueryData = queryClient.getQueryData<User[]>(['users', name])
+
+    if (!usersQueryData) {
+      return
+    }
+
+    const foundUser = usersQueryData.find(
+      (user) => user.name.toLowerCase() === data.name.toLowerCase(),
+    )
+    const userId = foundUser ? foundUser.id : null
+
+    const dataToSubmit = {
+      id: userId,
+      ...data,
+    }
+
+    console.log('🚀 ~ onSubmit ~ dataToSubmit:', dataToSubmit)
   }
 
   return (

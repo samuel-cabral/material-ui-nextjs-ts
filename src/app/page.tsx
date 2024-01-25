@@ -15,7 +15,7 @@ export default function Home() {
           alignItems: 'center',
         }}
       >
-        <Typography variant="h4" component="h1" sx={{ mb: 2 }}>
+        <Typography variant="h4" fontWeight={600} component="h1" sx={{ mb: 2 }}>
           Formulário de Pessoas
         </Typography>
 
